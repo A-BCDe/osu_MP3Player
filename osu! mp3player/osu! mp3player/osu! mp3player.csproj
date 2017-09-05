@@ -50,18 +50,53 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventClass\FindingSongInfoValueUpdatedEventArgs.cs" />
+    <Compile Include="EventClass\findSongListBoxSelectedIndexChangedEventArgs.cs" />
+    <Compile Include="EventClass\SongInfoValueUpdatedEventArgs.cs" />
     <Compile Include="Object\AbstractButton.cs" />
     <Compile Include="Object\PlayerWindow.cs" />
     <Compile Include="Object\Texture2D.cs" />
-    <Compile Include="Path\Path.cs" />
+    <Compile Include="FilePath\FileInfo.cs" />
+    <Compile Include="FilePath\SongInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Players\MP3Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WinForm Implements\FindingSongForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForm Implements\FindingSongForm.Designer.cs">
+      <DependentUpon>FindingSongForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WinForm Implements\NotImplementedForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForm Implements\NotImplementedForm.Designer.cs">
+      <DependentUpon>NotImplementedForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WinForm Implements\Osu! MP3 Player.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForm Implements\Osu! MP3 Player.Designer.cs">
+      <DependentUpon>Osu! MP3 Player.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="WinForm Implements\FindingSongForm.resx">
+      <DependentUpon>FindingSongForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForm Implements\NotImplementedForm.resx">
+      <DependentUpon>NotImplementedForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForm Implements\Osu! MP3 Player.resx">
+      <DependentUpon>Osu! MP3 Player.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
