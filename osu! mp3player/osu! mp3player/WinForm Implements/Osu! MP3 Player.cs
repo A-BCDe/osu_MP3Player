@@ -19,6 +19,7 @@ namespace osu__mp3player.WinForm_Implements
         private FileInfo fileInfo;
         private FindingSongForm findingSongForm;
         private string findingString;
+        private bool allowClose;
         public SongInfo CurrentSong
         {
             get;
@@ -29,20 +30,22 @@ namespace osu__mp3player.WinForm_Implements
         {
             fileInfo = new FileInfo();
             mp3Player = new MP3Player(fileInfo.SongsInfo);
-            CurrentSong = mp3Player.Open(0);
             findingString = "";
+
             InitializeComponent();
         }
 
         private void PrevButton_Click(object sender, EventArgs e)
         {
             CurrentSong = mp3Player.Open(-1);
+            UpdateTitle();
             mp3Player.Play();
         }
 
         private void PlayButton_Click(object sender, EventArgs e)
         {
             CurrentSong = mp3Player.Open(0);
+            UpdateTitle();
             mp3Player.Play();
         }
 
@@ -54,31 +57,33 @@ namespace osu__mp3player.WinForm_Implements
         private void StopButton_Click(object sender, EventArgs e)
         {
             mp3Player.Stop();
+            EraseTitle();
         }
 
         private void NextButton_Click(object sender, EventArgs e)
         {
             CurrentSong = mp3Player.Open(1);
+            UpdateTitle();
             mp3Player.Play();
         }
 
         private void FindSongButton_Click(object sender, EventArgs e)
         {
-            findingSongForm = new FindingSongForm(mp3Player._findingSongInfos);
-            findingSongForm.songInfoValueUpdated += new SongInfoValueUpdated(findingSongForm_SongInfoValueUpdated);
-            findingSongForm.findingSongInfoValueUpdated += new FindingSongInfoValueUpdated(findingSongForm_findingSongInfoValueUpdated);
-            findingSongForm.findsongListBoxSelectedIndexChanged += new findSongListBoxSelectedIndexChanged(findingSongForm_findSongListBoxSelectedIndexChanged);
+            findingSongForm = new FindingSongForm(mp3Player._SongInfos);
+            // findingSongForm.songInfoValueUpdated += new SongInfoValueUpdated(findingSongForm_SongInfoValueUpdated);
+            // findingSongForm.findingSongInfoValueUpdated += new FindingSongInfoValueUpdated(findingSongForm_findingSongInfoValueUpdated);
+            // findingSongForm.findsongListBoxSelectedIndexChanged += new findSongListBoxSelectedIndexChanged(findingSongForm_findSongListBoxSelectedIndexChanged);
             findingSongForm.Show();
         }
 
         private void findingSongForm_findSongListBoxSelectedIndexChanged(object sender, findSongListBoxSelectedIndexChangedEventArgs e)
         {
-            mp3Player.GetSongInfoandPlay(e.songinfo);
+            // mp3Player.GetSongInfoandPlay(e.songinfo);
         }
 
         private void findingSongForm_findingSongInfoValueUpdated(object sender, FindingSongInfoValueUpdatedEventArgs e)
         {
-            mp3Player.UpdateFindingSongInfos(e.FindingSongInfos);
+            // mp3Player.UpdateFindingSongInfos(e.FindingSongInfos);
         }
 
         private void findingSongForm_SongInfoValueUpdated(object sender, SongInfoValueUpdatedEventArgs e)
@@ -94,7 +99,9 @@ namespace osu__mp3player.WinForm_Implements
 
         private void MinimizeButton_Click(object sender, EventArgs e)
         {
-
+            notifyIcon.Visible = true;
+            allowClose = false;
+            this.Hide();
         }
 
         private void VolumeTrackBar_Scroll(object sender, EventArgs e)
@@ -105,6 +112,44 @@ namespace osu__mp3player.WinForm_Implements
         private void MuteBox_CheckedChanged(object sender, EventArgs e)
         {
             mp3Player.Mute();
+        }
+
+        protected override void SetVisibleCore(bool value)
+        {
+            if (!this.IsHandleCreated)
+            {
+                this.CreateHandle();
+                value = false;
+            }
+            base.SetVisibleCore(value);
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            if (!this.allowClose)
+            {
+                e.Cancel = true;
+                this.Hide();
+            }
+        }
+
+        private void notifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            this.WindowState = FormWindowState.Normal;
+            this.allowClose = true;
+            this.Show();
+        }
+
+        private void UpdateTitle()
+        {
+            TitleTextLabel.Text = CurrentSong.Title;
+            TitleTextUnicodeLabel.Text = CurrentSong.TitleUnicode;
+        }
+
+        private void EraseTitle()
+        {
+            TitleTextUnicodeLabel.Text = "";
+            TitleTextLabel.Text = "";
         }
     }
 }

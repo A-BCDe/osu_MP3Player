@@ -20,9 +20,8 @@ namespace osu__mp3player.Players
         private static extern long mciSendString(string lpstrCommand, StringBuilder lpstrReturnString, int uReturnLength, int hwndCallback);
         [DllImport("winmm.dll")]
         public static extern int mciGetErrorString(int errCode, StringBuilder errMsg, int buflen);
-
-        private List<SongInfo> _SongInfos;
-        public List<SongInfo> _findingSongInfos
+        
+        public List<SongInfo> _SongInfos
         {
             get;
             private set;
@@ -31,7 +30,6 @@ namespace osu__mp3player.Players
         private StringBuilder returnData;
         private long error;
         private int ListSize;
-        private int findingListSize;
         private int cur = 0;
         private bool paused;
         private int volume;
@@ -41,7 +39,7 @@ namespace osu__mp3player.Players
         public MP3Player(List<SongInfo> songInfos)
         {
             GetFiles(songInfos);
-            ShuffleFindingSongInfo();
+            ShuffleSongInfo();
             paused = false;
             volume = 100;
             muted = false;
@@ -51,8 +49,8 @@ namespace osu__mp3player.Players
 
         public void GetFiles(List<SongInfo> songInfos)
         {
-            _findingSongInfos = _SongInfos = songInfos;
-            findingListSize = ListSize = _SongInfos.Count;
+            _SongInfos = songInfos;
+            ListSize = songInfos.Count;
             if (ListSize == 0)
             {
                 throw new Exception(@"No .osu File! Check if the folder is osu! songs folder.
@@ -60,17 +58,17 @@ If not, check if the songinfo.info is empty.");
             }
         }
 
-        private void ShuffleFindingSongInfo()
+        private void ShuffleSongInfo()
         {
             Random rand = new Random();
-            int n = _findingSongInfos.Count;
+            int n = _SongInfos.Count;
             while (n > 1)
             {
                 n--;
                 int k = rand.Next(n + 1);
-                SongInfo value = _findingSongInfos[k];
-                _findingSongInfos[k] = _findingSongInfos[n];
-                _findingSongInfos[n] = value;
+                SongInfo value = _SongInfos[k];
+                _SongInfos[k] = _SongInfos[n];
+                _SongInfos[n] = value;
             }
         }
 
@@ -94,18 +92,18 @@ If not, check if the songinfo.info is empty.");
         {
             Close();
             curChanger(condition);
-            string command = "open \"" + _findingSongInfos[cur].Directory + "\" type MPEGVideo alias MyMP3";
+            string command = "open \"" + _SongInfos[cur].Directory + "\" type MPEGVideo alias MyMP3";
             error = mciSendString(command, null, 0, 0);
             if (error != 0)
             {
-                command= "open \"" + _findingSongInfos[cur].Directory + "\" alias MyMP3";
+                command= "open \"" + _SongInfos[cur].Directory + "\" alias MyMP3";
                 error = mciSendString(command, null, 0, 0);
                 //if (error != 0)
                 //{
                 //    throw new Exception("Cannot open file!");
                 //}
             }
-            return _findingSongInfos[cur];
+            return _SongInfos[cur];
         }
 
         public void Play()
@@ -223,18 +221,18 @@ If not, check if the songinfo.info is empty.");
         {
             cur = 0;
         }
-
+        /*
         public void UpdateFindingSongInfos(List<SongInfo> songinfos)
         {
-            _findingSongInfos = songinfos;
+            _SongInfos = songinfos;
         }
 
         public void GetSongInfoandPlay(SongInfo songinfo)
         {
-            cur = _findingSongInfos.IndexOf(songinfo);
+            cur = _SongInfos.IndexOf(songinfo);
             Open(0);
             Play();
         }
-        
+        */
     }
 }

@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventClass\CurrentSongUpdatedEventArgs.cs" />
     <Compile Include="EventClass\FindingSongInfoValueUpdatedEventArgs.cs" />
     <Compile Include="EventClass\findSongListBoxSelectedIndexChangedEventArgs.cs" />
     <Compile Include="EventClass\SongInfoValueUpdatedEventArgs.cs" />

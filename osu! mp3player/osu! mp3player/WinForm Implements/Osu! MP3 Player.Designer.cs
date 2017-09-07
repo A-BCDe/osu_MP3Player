@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Osu__MP3_Player));
             this.Title = new System.Windows.Forms.Label();
             this.TitleTextLabel = new System.Windows.Forms.Label();
@@ -45,6 +46,7 @@
             this.VolumeTrackBar = new System.Windows.Forms.TrackBar();
             this.VolumeLabel = new System.Windows.Forms.Label();
             this.MuteBox = new System.Windows.Forms.CheckBox();
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.SongTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.VolumeTrackBar)).BeginInit();
             this.SuspendLayout();
@@ -218,6 +220,12 @@
             this.MuteBox.UseVisualStyleBackColor = true;
             this.MuteBox.CheckedChanged += new System.EventHandler(this.MuteBox_CheckedChanged);
             // 
+            // notifyIcon
+            // 
+            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
+            this.notifyIcon.Text = "notifyIcon";
+            this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
+            // 
             // Osu__MP3_Player
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 22F);
@@ -239,6 +247,7 @@
             this.Controls.Add(this.TitleTextUnicodeLabel);
             this.Controls.Add(this.TitleTextLabel);
             this.Controls.Add(this.Title);
+            this.Cursor = System.Windows.Forms.Cursors.Default;
             this.Font = new System.Drawing.Font("Gulim", 13F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -271,5 +280,6 @@
         private System.Windows.Forms.TrackBar VolumeTrackBar;
         private System.Windows.Forms.Label VolumeLabel;
         private System.Windows.Forms.CheckBox MuteBox;
+        private System.Windows.Forms.NotifyIcon notifyIcon;
     }
 }
