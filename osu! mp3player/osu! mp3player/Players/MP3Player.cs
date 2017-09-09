@@ -43,6 +43,7 @@ namespace osu__mp3player.Players
             paused = false;
             volume = 100;
             muted = false;
+            error = -1;
             msg = new StringBuilder(128);
             returnData = new StringBuilder(128);
         }
@@ -157,7 +158,6 @@ If not, check if the songinfo.info is empty.");
                 return true;
             }
             return false;
-
         }
 
         public int GetCurrentMillisecond()
@@ -184,13 +184,22 @@ If not, check if the songinfo.info is empty.");
 
         public int GetSongLength()
         {
-            if (IsPlaying())
+            string command = "status MyMP3 length";
+            error = mciSendString(command, returnData, returnData.Capacity, 0);
+            try
             {
-                string command = "status MyMP3 length";
-                error = mciSendString(command, returnData, returnData.Capacity, 0);
                 return int.Parse(returnData.ToString());
             }
-            return 0;
+            catch(Exception e)
+            {
+                Console.WriteLine(_SongInfos[cur]);
+                Console.WriteLine(_SongInfos[cur].ArtistUnicode);
+                Console.WriteLine(_SongInfos[cur].BeatmapID);
+                Console.WriteLine(_SongInfos[cur].Creator);
+                Console.WriteLine(_SongInfos[cur].Directory);
+                Console.WriteLine(e);
+                return 0;
+            }
         }
 
         public void SetVolume(int volume)
@@ -201,14 +210,19 @@ If not, check if the songinfo.info is empty.");
                 string command = "setaudio MyMP3 volume to " + volume.ToString();
                 error = mciSendString(command, null, 0, 0);
             }
+            if (muted)
+            {
+                string command = "setaudio MyMP3 volume to 0";
+                error = mciSendString(command, null, 0, 0);
+            }
         }
 
-        public void Mute()
+        public void Mute(int value)
         {
             if (muted)
             {
                 muted = false;
-                SetVolume(volume);
+                SetVolume(volume = value);
             }
             else
             {

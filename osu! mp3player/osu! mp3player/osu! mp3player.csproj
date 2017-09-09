@@ -53,6 +53,7 @@
     <Compile Include="EventClass\CurrentSongUpdatedEventArgs.cs" />
     <Compile Include="EventClass\FindingSongInfoValueUpdatedEventArgs.cs" />
     <Compile Include="EventClass\findSongListBoxSelectedIndexChangedEventArgs.cs" />
+    <Compile Include="EventClass\PlayingChangedEventArgs.cs" />
     <Compile Include="EventClass\SongInfoValueUpdatedEventArgs.cs" />
     <Compile Include="Object\AbstractButton.cs" />
     <Compile Include="Object\PlayerWindow.cs" />

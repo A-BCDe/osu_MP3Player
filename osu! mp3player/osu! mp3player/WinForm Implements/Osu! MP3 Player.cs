@@ -39,6 +39,7 @@ namespace osu__mp3player.WinForm_Implements
         {
             CurrentSong = mp3Player.Open(-1);
             UpdateTitle();
+            UpdateSongLength();
             mp3Player.Play();
         }
 
@@ -46,6 +47,7 @@ namespace osu__mp3player.WinForm_Implements
         {
             CurrentSong = mp3Player.Open(0);
             UpdateTitle();
+            UpdateSongLength();
             mp3Player.Play();
         }
 
@@ -57,6 +59,7 @@ namespace osu__mp3player.WinForm_Implements
         private void StopButton_Click(object sender, EventArgs e)
         {
             mp3Player.Stop();
+            ResetTimeLabel();
             EraseTitle();
         }
 
@@ -64,6 +67,7 @@ namespace osu__mp3player.WinForm_Implements
         {
             CurrentSong = mp3Player.Open(1);
             UpdateTitle();
+            UpdateSongLength();
             mp3Player.Play();
         }
 
@@ -111,7 +115,7 @@ namespace osu__mp3player.WinForm_Implements
 
         private void MuteBox_CheckedChanged(object sender, EventArgs e)
         {
-            mp3Player.Mute();
+            mp3Player.Mute(VolumeTrackBar.Value);
         }
 
         protected override void SetVisibleCore(bool value)
@@ -144,6 +148,18 @@ namespace osu__mp3player.WinForm_Implements
         {
             TitleTextLabel.Text = CurrentSong.Title;
             TitleTextUnicodeLabel.Text = CurrentSong.TitleUnicode;
+        }
+
+        private void UpdateSongLength()
+        {
+            int lengthMillisecond = mp3Player.GetSongLength();
+            SongTrackBar.Maximum = lengthMillisecond;
+            TimeLabel.Text = (lengthMillisecond / 60000).ToString("00") + ":" + ((lengthMillisecond % 60000) / 1000).ToString("00");
+        }
+
+        private void ResetTimeLabel()
+        {
+            TimeLabel.Text = "00:00 / 00:00";
         }
 
         private void EraseTitle()
