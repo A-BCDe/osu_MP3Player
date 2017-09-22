@@ -47,6 +47,7 @@
             this.VolumeLabel = new System.Windows.Forms.Label();
             this.MuteBox = new System.Windows.Forms.CheckBox();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.mapInfo = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.SongTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.VolumeTrackBar)).BeginInit();
             this.SuspendLayout();
@@ -226,11 +227,24 @@
             this.notifyIcon.Text = "notifyIcon";
             this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
             // 
+            // mapInfo
+            // 
+            this.mapInfo.AutoSize = true;
+            this.mapInfo.Font = new System.Drawing.Font("Malgun Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.mapInfo.Location = new System.Drawing.Point(657, 62);
+            this.mapInfo.Name = "MapInfo";
+            this.mapInfo.Size = new System.Drawing.Size(72, 20);
+            this.mapInfo.TabIndex = 16;
+            this.mapInfo.TabStop = true;
+            this.mapInfo.Text = "Map Info";
+            this.mapInfo.MouseHover += MapInfo_MouseHover;
+            // 
             // Osu__MP3_Player
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 22F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(766, 365);
+            this.Controls.Add(this.mapInfo);
             this.Controls.Add(this.MuteBox);
             this.Controls.Add(this.VolumeLabel);
             this.Controls.Add(this.VolumeTrackBar);
@@ -261,7 +275,6 @@
             this.PerformLayout();
 
         }
-
         #endregion
 
         private System.Windows.Forms.Label Title;
@@ -281,5 +294,6 @@
         private System.Windows.Forms.Label VolumeLabel;
         private System.Windows.Forms.CheckBox MuteBox;
         private System.Windows.Forms.NotifyIcon notifyIcon;
+        private System.Windows.Forms.LinkLabel mapInfo;
     }
 }

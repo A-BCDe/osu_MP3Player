@@ -25,14 +25,19 @@ namespace osu__mp3player.WinForm_Implements
             get;
             private set;
         }
+        ToolTip mapInfoToolTip;
 
         public Osu__MP3_Player()
         {
             fileInfo = new FileInfo();
             mp3Player = new MP3Player(fileInfo.SongsInfo);
             findingString = "";
-
+            //mapInfoToolTip = new ToolTip();
+            //mapInfoToolTip.AutoPopDelay = 5000;
+            //mapInfoToolTip.InitialDelay = 500;
+            //mapInfoToolTip.SetToolTip(this.mapInfo, "hi");
             InitializeComponent();
+            
         }
 
         private void PrevButton_Click(object sender, EventArgs e)
@@ -142,6 +147,11 @@ namespace osu__mp3player.WinForm_Implements
             this.WindowState = FormWindowState.Normal;
             this.allowClose = true;
             this.Show();
+        }
+
+        private void MapInfo_MouseHover(object sender, System.EventArgs e)
+        {
+            
         }
 
         private void UpdateTitle()
